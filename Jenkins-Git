@@ -1,11 +1,21 @@
-pipeline {
+pipeline{
     agent any
-
-    stages {
-        stage('Git') {
-            steps {
-                echo 'Hello World'
+    
+    environment{
+        PATH = "/opt/maven/bin:$PATH"
+    }
+    stages{
+        stage("Git Checkout"){
+            steps{
+                git credentialsId: 'github', url: 'https://github.com/meghanarajkumar09/agandla'
             }
         }
-    }
+        stage("Maven Build"){
+            steps{
+                sh "mvn clean package"
+            }
+
 }
+}
+}
+
